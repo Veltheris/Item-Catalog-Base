@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}{{category.name}} - {{ super() }}{% endblock %}
+
+{% block sidebar %}
+<h2>Categories</h2>
+<ul>
+{% for entry in sidebar %}
+<li><a {% if entry.name == category.name %} style="font-weight: bold;" {% endif %}href="{{url_for('.catalogListCategory',category=entry.name)}}">{% if not entry.public %}[R]{% endif %}{{entry.name}} ({{itemcount.filter_by(category_id=entry.id).count()}})</a></li>
+{% endfor %}
+</ul>
+<a href="{{url_for('.catalogAddCategory')}}">Make a new Category</a>
+{% endblock %}
+
+{% block main %}
+<div id="subheader">
+<h1>{{category.name}}</h1>
+<span> Curated by {{creator.name}} <img src="{{creator.picture}}"/></span>
+{% if category.user_id == session['user_id'] %}
+<br /><a href="{{url_for('.catalogEditCategory', category=category.name)}}">Edit Category</a>
+ <a href="{{url_for('.catalogDelCategory', category=category.name)}}">Delete Category</a>
+{% endif %}
+</div>
+{% if category.user_id == session['user_id'] or category.public %}
+<a href="{{url_for('.catalogAddItem', category = category.name)}}">New Item</a>
+{% endif %}
+<table class="items">
+{% for item in items %}
+  <tr class="item">
+  <td class="name" >{{item.name}}<br />(by {{item.user.name}})<br />
+{% if item.user_id == session['user_id'] %}
+  <a href="{{url_for('.catalogEditItem', item=item.name)}}">Edit</a>
+{% endif %}{% if item.user_id == session['user_id'] or category.user_id == session['user_id']%}
+  <a href="{{url_for('.catalogDelItem', item=item.name)}}">Delete</a></td>
+{% endif %}
+  <td class="description" {% if not item.picture%}colspan="2"{% endif %}>{{item.description}}</td>
+{% if item.picture %}
+  <td class="tabpic">
+  <img src="{{url_for('static', filename='pictures/%s' % item.picture)}}" />
+  </td>
+{% endif %}
+  </tr>
+{% else %}
+<tr><td>There are no items in this Category!</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

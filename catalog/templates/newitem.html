@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}New Item - {{ super() }}{% endblock %}
+{% block content %}
+<h2>New Item</h2>
+<form action="{{url_for('.catalogAddItem')}}" enctype="multipart/form-data" method='POST'>
+<p>Name:</p>
+<input type='text' size='30' name='name' required/><br />
+<select name="category" required>
+{% for entry in category %}
+{% if entry.user_id == session['user_id'] or entry.public%}
+<option value="{{entry.id}}" {% if entry.name == default%}selected{% endif %}>{{entry.name}}</option>
+{% endif %}
+{% endfor %}
+</select><br />
+<input type="textfield" size="50" name="description" /><br />
+<br />Optional: pick a picture.<br />
+<input type="file" name="picture" />
+<input type="hidden" name="_csrf_token" value="{{csrf_token()}}" />
+<input type='submit' value='Create'>
+<a href="{{url_for('.catalogListHome')}}">Cancel</a>
+</form>
+{% endblock %}

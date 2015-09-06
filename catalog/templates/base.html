@@ -1,0 +1,43 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+<title>{% block title %}Item Catalog{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="{{url_for('.static', filename='style.css')}}" />
+<link rel="alternate" type="application/rss+xml" title="Item Catalog RSS Feed" href="{{url_for('.catalogRSSAll')}}">
+{% block code %}{% endblock %}
+</head>
+<body>
+<div id="header"><a href="{{url_for('.catalogListHome')}}"><h1>Item Catalog App</h1></a>
+<div id="signin">
+{% if not session['username'] %}
+<a style="text-align: right;" href="{{url_for('.catalogLogin')}}">Sign In</a>
+{% else %}
+Hello {{session['username']}} <a href="{{url_for('.gdisconnect')}}">Sign Out</a>
+{% endif %}
+</div>
+</div>
+{% block messages %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div id='messages'>
+    <ul>
+	{% for message in messages %}
+	  <li><b>{{message}}</b></li>
+	{% endfor %}
+	</ul>
+	</div>
+  {% endif %}
+{% endwith %}
+{% endblock %}
+<div id="content">
+{% block content %}
+<div id="sidebar">
+{% block sidebar %}
+{% endblock %}
+</div><div id="main">
+{% block main %}
+{% endblock %}
+{% endblock %}
+</div>
+</body>
+</html>

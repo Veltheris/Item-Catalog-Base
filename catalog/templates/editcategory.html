@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Edit Category - {{ super() }}{% endblock %}
+{% block content %}
+<h2>Edit Category</h2>
+<form action="{{url_for('.catalogEditCategory', category=category.name)}}" enctype="multipart/form-data" method='POST'>
+<p>Name:</p>
+<input type='text' size='30' name='name' placeholder="{{category.name}}"><br />
+<br /><input type="checkbox" name="public" value="true" {% if category.public %}checked{% endif %}>Make Public (Anyone can add Items)<br />
+<input type="hidden" name="_csrf_token" value="{{csrf_token()}}" />
+<br /><input type='submit' value='Edit'>
+<a href="{{url_for('.catalogListHome')}}">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Delete Item - {{ super() }}{% endblock %}
+{% block content %}
+<h2>Delete Item</h2>
+<form action="{{url_for('.catalogDelItem', item = item.name)}}" method = 'POST'>
+<p>Are you sure you want to delete {{item.name}}?</p>
+<input type="hidden" name="token" value="{{token}}" />
+<input type="hidden" name="_csrf_token" value="{{csrf_token()}}" />
+<input type='submit' value='Delete!' />
+<a href="{{url_for('.catalogListCategory',category=category.name)}}">Cancel</a>
+</form>
+{% endblock %}

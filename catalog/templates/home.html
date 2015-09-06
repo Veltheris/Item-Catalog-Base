@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}{{ super() }}{% endblock %}
+
+{% block sidebar %}
+<h2>Categories</h2>
+<ul>
+{% for entry in category %}
+<li><a href="{{url_for('.catalogListCategory',category=entry.name)}}">{% if not entry.public %}[R]{% endif %}{{entry.name}} ({{itemcount.filter_by(category_id=entry.id).count()}})</a></li>
+{% endfor %}
+</ul>
+<a href="{{url_for('.catalogAddCategory')}}">Make a new Category</a>
+{% endblock %}
+
+{% block main %}
+<h1>Latest Items:</h1>
+<a href='{{url_for('.catalogAddItem')}}'>Make a New Item</a><br />
+<table class="items">
+{% for entry in items %}
+  <tr class="item"><td>{{entry.name}} ({{entry.category.name}})<br />
+{% if entry.user_id == session['user_id'] %}
+  <a href="{{url_for('.catalogEditItem', item=entry.name)}}">Edit Item</a> 
+{% endif %}{% if entry.user_id == session['user_id'] or entry.category.user_id == session['user_id'] %}
+  <a href="{{url_for('.catalogDelItem', item=entry.name)}}">Delete Item</a><br />
+{% endif %}
+  </td>
+  <td class="description" {% if not entry.picture%}colspan="2"{% endif %}>{{entry.user.name}}</td>
+{% if entry.picture %}
+  <td class="tabpic">
+  <img src="{{url_for('static', filename='pictures/%s' % entry.picture)}}" />
+  </td>
+{% endif %}
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}

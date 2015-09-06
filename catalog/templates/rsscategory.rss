@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+ <title>{{category.name}} - Item Catalog</title>
+ <description>{{category.name}} items from the Item Catalog Application</description>
+ <link>{{url + url_for('.catalogListCategory', category=category.name)}}</link>
+ <lastBuildDate>{{ latest }}</lastBuildDate>
+ <pubDate>{{ latest }}</pubDate>
+ <ttl>1800</ttl>
+{% for item in items %}
+<item>
+  <title>{{ item.name }}</title>
+  <link>{{ url + url_for('.catalogListCategory', category=item.category.name)}}</link>
+  <pubDate>{{item.changed.strftime('%d %B %Y %X')}}</pubDate>
+  <author>{{item.user.name}}</author>
+  <category>{{item.category.name}}</category>
+  <description>{{item.description}}</description>
+  {% if item.picture %}
+  <picture>{{url_for('static', filename='pictures/%s' % item.picture)}}</picture>
+  {% endif %}
+</item>
+{% endfor %}
+</channel>
+</rss>
