@@ -17,17 +17,9 @@ This application can be used in two ways. Set up the Vagrant machine, which incl
 Note for manual - If you have PIP for Python, you can use it to quickly download/install the python modules.
 you can find it at https://pypi.python.org/pypi/pip/
 
-###Both:
 -Google+ Account [Required for Login] - This website uses Oauth2 Authentication through Google+ for secure logins.
 -Google Developers [Optional] - To control the website logins and allow logins from other computers, Google Developers is required.
   -see https://console.developers.google.com and at the --Extras-- under installation below.
-
-###Vagrant:
-- VirtualBox [Required]: Provides functions needed by Vagrant.
-  - https://www.virtualbox.org/wiki/Downloads for download
-- Vagrant [Required]: Virtual Machine System
-  - see https://www.vagrantup.com/downloads.html for download
-###Manual:
 - Python [Required]: Designed for 2.7, though it may work on others.
   - see https://www.python.org/downloads/ for download.
 - psycopg2 [Required]: A Python Module to connect with PostgreSQL.
@@ -41,18 +33,12 @@ you can find it at https://pypi.python.org/pypi/pip/
 - Oauth2Client [Required]: Version 1.4.12 Python module to support the login with Google
   - https://github.com/google/oauth2client/
 - Flask-SeaSurf [Required]: Version 0.2.0 Python module to reduce CSRF 
-
+- Flask-SQLAlchemy [Required]: Python module to integrate SQLAlchemy easily.
 
 ##Installation/Setup
 Place this folder somewhere where you wish to run it from. Then Follow the instructions below.
-If you have the manual requirements fulfilled, you can skip ahead to --From Manual--
 
-###With Vagrant
-In the command line/Terminal, navigate to Catalog/vagrant and run `vagrant up`
-Once that completes, run `vagrant ssh` to connect to the machine.
-inside the vm, run `cd /vagrant/catalog`, and continue the instructions below.
-###From Manual
-once inside catalog, use `python application.py` to run the Flask Application. the website can be found by opening a web browser and going to `http://localhost:5000/`.
+Once inside catalog, use `python application.py` to run the Flask Application. the website can be found by opening a web browser and going to `http://localhost:5000/`.
 Users on the website can now log in using google+ to create categories and items. Users can create items their own private categories, as well as those marked as public Categories.
 Users can edit and delete their own items and categories, as well as deleting items in categories they own.
 For an example of how the website can work, go to `http://localhost:5000/catalog/testdata` to create some test data.
@@ -88,6 +74,11 @@ This application has been modified to have support for images, increased protect
   - Maded the routes more clear to reduce problems.
   - Added some cascades to the database setup.
   - Fixed an issue where a item could be entered without a name.
+###Version 2.0
+- Created from Item-Catalog-Application.
+  - Removed the Vagrant files.
+  - Added Flask-SQLAlchemy Support.
+  - Changed Database toPostgreSQL.
 
 ###Comments
 Flask is Awesome! :D
